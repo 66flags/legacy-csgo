@@ -30,8 +30,5 @@ bool interfaces::init ( ) {
 	m_client_state = pattern::find ( _ ( "engine.dll" ), _ ( "A1 ? ? ? ? 8B 88 ? ? ? ? 85 C9 75 07" ) ).add ( 1 ).deref ( ).deref ( ).as < c_client_state * > ( );
 	m_client_mode = pattern::find ( _ ( "client.dll" ), _ ( "8B 0D ? ? ? ? 8B 01 FF 50 1C 85 F6 75 0D A1" ) ).add ( 2 ).deref ( ).deref ( ).as < c_client_mode * > ( );
 
-	// initialize draw manager.
-	draw_list::init ( m_device );
-
 	return true;
 }

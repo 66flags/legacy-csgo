@@ -15,17 +15,17 @@ bool  __fastcall hooks_t::create_move ( void *ecx, void *edx, float input_sample
 	vec_t old_angs;
 	interfaces::m_engine->get_view_angles ( old_angs );
 
-	// run movement stuff before prediction.
+	/* run movement stuff before prediction. */
 	movement.pre_prediction ( ucmd );
 	movement.run ( ucmd, old_angs );
 
-	// run prediction code.
+	/* run prediction code. */
 	prediction.predict ( ucmd, [ & ] {
 	} );
 
 	vec_t angs;
 	fix_angles ( angs );
 
-	// correct player movement.
+	/* correct player movement. */
 	movement.correct_movement ( ucmd, angs );
 }

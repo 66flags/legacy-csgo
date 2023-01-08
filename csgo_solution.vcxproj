@@ -19,15 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base_control.h" />
     <ClInclude Include="buffer.h" />
-    <ClInclude Include="button.h" />
-    <ClInclude Include="checkbox.h" />
     <ClInclude Include="client.h" />
     <ClInclude Include="client_mode.h" />
     <ClInclude Include="color.h" />
-    <ClInclude Include="colorpicker.h" />
-    <ClInclude Include="combobox.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="convar.h" />
     <ClInclude Include="crc32.h" />
@@ -36,16 +31,6 @@
     <ClInclude Include="engine.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_type.h" />
-    <ClInclude Include="group.h" />
-    <ClInclude Include="imconfig.h" />
-    <ClInclude Include="imgui.h" />
-    <ClInclude Include="imgui_freetype.h" />
-    <ClInclude Include="imgui_impl_dx9.h" />
-    <ClInclude Include="imgui_impl_win32.h" />
-    <ClInclude Include="imgui_internal.h" />
-    <ClInclude Include="imstb_rectpack.h" />
-    <ClInclude Include="imstb_textedit.h" />
-    <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="include\freetype\config\ftconfig.h" />
     <ClInclude Include="include\freetype\config\ftheader.h" />
     <ClInclude Include="include\freetype\config\ftmodule.h" />
@@ -182,11 +167,8 @@
     <ClInclude Include="include\nlohmann\ordered_map.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
-    <ClInclude Include="inputsystem.h" />
-    <ClInclude Include="keybind.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="movement.h" />
-    <ClInclude Include="multi_combobox.h" />
     <ClInclude Include="penetration.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="entlist.h" />
@@ -221,12 +203,9 @@
     <ClInclude Include="prediction_error_handler.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="sdk.h" />
-    <ClInclude Include="slider.h" />
-    <ClInclude Include="smallest_pixel.h" />
+    <ClInclude Include="sesui.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="surfacedata.h" />
-    <ClInclude Include="tab.h" />
-    <ClInclude Include="textbox.h" />
     <ClInclude Include="tinyformat.h" />
     <ClInclude Include="trace.h" />
     <ClInclude Include="trampoline.h" />
@@ -236,35 +215,18 @@
     <ClInclude Include="visitor.h" />
     <ClInclude Include="visuals.h" />
     <ClInclude Include="weapon.h" />
-    <ClInclude Include="window.h" />
     <ClInclude Include="xorstr.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="base_control.cpp" />
     <ClCompile Include="buffer.c" />
-    <ClCompile Include="button.cpp" />
-    <ClCompile Include="checkbox.cpp" />
-    <ClCompile Include="colorpicker.cpp" />
-    <ClCompile Include="combobox.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="create_move.cpp" />
     <ClCompile Include="draw_list.cpp" />
     <ClCompile Include="end_scene.cpp" />
     <ClCompile Include="frame_stage_notify.cpp" />
-    <ClCompile Include="group.cpp" />
-    <ClCompile Include="imgui.cpp" />
-    <ClCompile Include="imgui_demo.cpp" />
-    <ClCompile Include="imgui_draw.cpp" />
-    <ClCompile Include="imgui_freetype.cpp" />
-    <ClCompile Include="imgui_impl_dx9.cpp" />
-    <ClCompile Include="imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui_tables.cpp" />
-    <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="keybind.cpp" />
     <ClCompile Include="lock_cursor.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="movement.cpp" />
-    <ClCompile Include="multi_combobox.cpp" />
     <ClCompile Include="paint.cpp" />
     <ClCompile Include="paint_traverse.cpp" />
     <ClCompile Include="penetration.cpp" />
@@ -286,13 +248,10 @@
     <ClCompile Include="render.cpp" />
     <ClCompile Include="reset.cpp" />
     <ClCompile Include="run_command.cpp" />
-    <ClCompile Include="slider.cpp" />
-    <ClCompile Include="tab.cpp" />
-    <ClCompile Include="textbox.cpp" />
+    <ClCompile Include="sesui.cpp" />
     <ClCompile Include="trampoline.c" />
     <ClCompile Include="visuals.cpp" />
     <ClCompile Include="weapon.cpp" />
-    <ClCompile Include="window.cpp" />
     <ClCompile Include="wnd_proc.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -374,7 +333,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>freetype.lib;d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -398,7 +357,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>freetype.lib;d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

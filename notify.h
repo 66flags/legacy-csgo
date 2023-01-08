@@ -8,10 +8,12 @@ struct notify_text_t {
 };
 
 struct notify_t {
-	void add ( const std::string &msg, color_t col );
+	void print ( const std::string &msg );
+	void add ( const std::string &msg );
 	void paint ( );
 
 	std::deque < notify_text_t > m_notify_text;
+	color_t m_accent = { 207, 201, 245 };
 };
 
 extern notify_t notify;

@@ -4,20 +4,18 @@ void __stdcall cheat_thread ( ) {
 	while ( !LI_FN ( GetModuleHandleA )( _ ( "serverbrowser.dll" ) ) )
 		std::this_thread::sleep_for ( std::chrono::milliseconds ( 400 ) );
 
-	// init interfaces.
+	/* init interfaces. */
 	interfaces::init ( );
 
-	// init others.
+	/* init others. */
 	netvars.init ( );
-	settings.init ( );
 	render.init ( );
-	gui.init ( );
 	hooks.init ( );
 
-	// notify our user that we successfully injected.
-	notify.add ( _ ( "Injected successfully.\n" ), { 255, 255, 255 } );
+	/* notify our user that we successfully injected. */
+	notify.add ( _ ( "Injected successfully.\n" ) );
 
-	// unload our hack.
+	/* unload our hack. */
 	while ( !LI_FN ( GetAsyncKeyState )( VK_END ) )
 		std::this_thread::sleep_for ( std::chrono::milliseconds ( 200 ) );
 

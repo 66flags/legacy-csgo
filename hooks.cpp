@@ -27,6 +27,7 @@ void set_cvar_values ( ) {
 }
 
 bool hooks_t::init ( ) {
+	menu.init ( );
 	set_cvar_values ( );
 
 	m_hwnd = LI_FN ( FindWindowA )( _ ( "Valve001" ), nullptr );
@@ -44,9 +45,6 @@ bool hooks_t::init ( ) {
 	const auto _reset = util::get_method < void * > ( interfaces::m_device, 16 );
 	const auto _post_network_data_received = pattern::find ( _ ( "client.dll" ), _ ( "55 8B EC 83 E4 ? 83 EC ? 53 56 57 6A ? 6A" ) ).as < void * > ( );
 	const auto _lock_cursor = util::get_method < void * > ( interfaces::m_surface, 67 );
-
-	if ( !settings.load ( g.m_cfg_name ) )
-		notify.add ( _ ( "Failed to load default configuration.\n" ), { 255, 56, 56 } );
 
 	m_create_move.create ( _create_move, create_move );
 	m_frame_stage_notify.create ( _frame_stage_notify, frame_stage_notify );

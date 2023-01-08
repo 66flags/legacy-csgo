@@ -174,30 +174,6 @@
     <ClInclude Include="movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="imconfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_dx9.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_win32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_rectpack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_textedit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_truetype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\freetype\config\ftconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -474,12 +450,6 @@
     <ClInclude Include="include\ft2build.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inputsystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_freetype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -624,52 +594,16 @@
     <ClInclude Include="prediction_copy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="base_control.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="checkbox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="colorpicker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="combobox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="draw_list.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="group.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="keybind.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="multi_combobox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="slider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="smallest_pixel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tab.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="textbox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="visitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="window.h">
+    <ClInclude Include="client_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client_mode.h">
+    <ClInclude Include="sesui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -731,30 +665,6 @@
     <ClCompile Include="movement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_demo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_dx9.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_win32.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_tables.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_freetype.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -797,43 +707,10 @@
     <ClCompile Include="prediction_copy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base_control.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="checkbox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="colorpicker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="combobox.cpp">
+    <ClCompile Include="sesui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="draw_list.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="group.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="keybind.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="multi_combobox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="slider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tab.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="textbox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

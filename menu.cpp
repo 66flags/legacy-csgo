@@ -1,110 +1,77 @@
 #include "includes.h"
 
-gui_t gui { };
+menu_t menu { };
 
-void gui_t::init ( ) {
-	auto menu_dim = rect_t { 0, 0, 502, 301 };
-	auto screen_center = vec2_t { ( render.m_width - menu_dim.w ) / 2, ( render.m_height - menu_dim.h ) / 2 };
+void menu_t::init ( ) {
+	draw_list::device = interfaces::m_device;
 
-	auto window = this->create_window ( _ ( "hypnotic" ), { screen_center.x, screen_center.y, menu_dim.w, menu_dim.h } ); {
-		auto rage = window->add_tab ( _ ( "Rage" ) ); {
-			auto general = rage->add_child ( _ ( "General" ), { 0, 0, 236, 243 } ); {
-			}
+	unsigned long font_count = 0;
+	LI_FN ( AddFontMemResourceEx ) ( &sesui::fonts::font_default, sizeof sesui::fonts::font_default, nullptr, &font_count );
 
-			auto antiaim = rage->add_child ( _ ( "Anti-aim" ), { 245, 0, 236, 116 } ); {
-			}
-
-			auto fakelag = rage->add_child ( _ ( "Fakelag" ), { 245, 127, 236, 116 } ); {
-
-			}
-		}
-
-		auto visuals = window->add_tab ( _ ( "Visuals" ) ); {
-			auto players = visuals->add_child ( _ ( "Main" ), { 0, 0, 236, 243 } ); {
-				players->add_keybind ( _ ( "Toggle key" ), &settings.get_item < int > ( _ ( "visuals.visual_toggle_key" ) ), &settings.get_item < int > ( _ ( "visuals.visual_toggle_key_toggle" ) ) );
-				players->add_checkbox ( _ ( "Enable" ), &settings.get_item < bool > ( _ ( "visuals.players_enable" ) ) );
-				players->add_checkbox ( _ ( "Dormant" ), &settings.get_item < bool > ( _ ( "visuals.dormant" ) ) );
-				players->add_slider ( _ ( "Dormacy time" ), &settings.get_item < float > ( _ ( "visuals.dormancy_time" ) ), 0, 10 );
-				players->add_colorpicker ( _ ( "Health color 1" ), &settings.get_item < color_t > ( _ ( "visuals.health_color1" ) ) );
-				players->add_colorpicker ( _ ( "Health color 2" ), &settings.get_item < color_t > ( _ ( "visuals.health_color2" ) ), 20 );
-				players->add_checkbox ( _ ( "Health" ), &settings.get_item < bool > ( _ ( "visuals.health" ) ) );
-				players->add_colorpicker ( _ ( "Health color 1" ), &settings.get_item < color_t > ( _ ( "visuals.name_color" ) ) );
-				players->add_checkbox ( _ ( "Name" ), &settings.get_item < bool > ( _ ( "visuals.name" ) ) );
-				players->add_colorpicker ( _ ( "Health color 1" ), &settings.get_item < color_t > ( _ ( "visuals.weapon_color" ) ) );
-				players->add_checkbox ( _ ( "Weapon" ), &settings.get_item < bool > ( _ ( "visuals.weapon" ) ) );
-				players->add_colorpicker ( _ ( "Health color 1" ), &settings.get_item < color_t > ( _ ( "visuals.box_color" ) ) );
-				players->add_checkbox ( _ ( "Bounding box" ), &settings.get_item < bool > ( _ ( "visuals.box" ) ) );
-			}
-
-			auto models = visuals->add_child ( _ ( "Models" ), { 245, 0, 236, 116 } ); {
-			}
-
-			auto misc = visuals->add_child ( _ ( "Misc" ), { 245, 127, 236, 116 } ); {
-				misc->add_colorpicker ( _ ( "Grenade line color" ), &settings.get_item < color_t > ( _ ( "visuals.grenade_line_color" ) ) );
-				misc->add_colorpicker ( _ ( "Grenade circle color" ), &settings.get_item < color_t > ( _ ( "visuals.grenade_circle_color" ) ), 20 );
-				misc->add_checkbox ( _ ( "Grenade trajectory" ), &settings.get_item < bool > ( _ ( "visuals.grenade_visualization" ) ) );
-				misc->add_checkbox ( _ ( "Prop transparency" ), &settings.get_item < bool > ( _ ( "visuals.prop_transparency" ) ) );
-				misc->add_slider ( _ ( "Prop transparency amount" ), &settings.get_item < float > ( _ ( "visuals.prop_transparency_amt" ) ), 0.0f, 100.0f );
-				misc->add_keybind ( _ ( "Thirdperson key" ), &settings.get_item < int > ( _ ( "visuals.thirdperson_key" ) ), &settings.get_item < int > ( _ ( "visuals.thirdperson_toggle" ) ) );
-				misc->add_checkbox ( _ ( "Thirdperson" ), &settings.get_item < bool > ( _ ( "visuals.thirdperson" ) ) );
-				misc->add_slider ( _ ( "Thirdperson distance" ), &settings.get_item < float > ( _ ( "visuals.thirdperson_dist" ) ), 0.0f, 120.0f );
-				misc->add_checkbox ( _ ( "Force when spectating" ), &settings.get_item < bool > ( _ ( "visuals.thirdperson_spectator" ) ) );
-				
-				misc->add_multi_combobox ( _ ( "Log events" ),
-					{ 
-						&settings.get_item < bool > ( _ ( "events.hurt" ) ),
-						&settings.get_item < bool > ( _ ( "events.buy" ) ),
-						&settings.get_item < bool > ( _ ( "events.bomb" ) ), 
-						&settings.get_item < bool > ( _ ( "events.round" ) ) 
-					}, { _ ( "Entity hurt" ), _ ( "Weapon buy" ), _ ( "Bomb planted" ), _ ( "Rounds" ) } );
-			}
-		}
-
-		auto misc = window->add_tab ( _ ( "Misc" ) ); {
-			auto movement = misc->add_child ( _ ( "Movement" ), { 0, 0, 236, 243 } ); {
-				movement->add_checkbox ( _ ( "Auto bhop" ), &settings.get_item < bool > ( _ ( "misc.bunny_hop" ) ) );
-				movement->add_checkbox ( _ ( "Auto strafe" ), &settings.get_item < bool > ( _ ( "misc.auto_strafe" ) ) );
-				movement->add_combobox ( _ ( "Strafe type" ), &settings.get_item < int > ( _ ( "misc.auto_strafe_type" ) ), { _ ( "View angle" ), _ ( "Key strafe" ) } );
-				movement->add_checkbox ( _ ( "Unlimited duck" ), &settings.get_item < bool > ( _ ( "misc.unlimited_duck" ) ) );
-			}
-
-			auto other = misc->add_child ( _ ( "Other" ), { 245, 0, 236, 243 } ); {
-				other->add_button ( _ ( "Reload default values" ), [ ] {
-					settings.init ( );
-				} );
-			}
-		}
-	}
+	sesui::draw_list.draw_polygon = draw_list::polygon;
+	sesui::draw_list.draw_text = draw_list::text;
+	sesui::draw_list.get_text_size = draw_list::get_text_size;
+	sesui::draw_list.draw_multicolor_polygon = draw_list::multicolor_polygon;
+	sesui::draw_list.get_frametime = draw_list::get_frametime;
+	sesui::draw_list.begin_clip = draw_list::begin_clip;
+	sesui::draw_list.end_clip = draw_list::end_clip;
+	sesui::draw_list.create_font = draw_list::create_font;
 }
 
-void gui_t::draw ( ) {
-	inputsys.update ( );
+int main_window_tab_idx = 0;
 
-	if ( inputsys.key_pressed ( VK_INSERT ) ) {
-		this->m_visible = !this->m_visible;
-		m_should_save = true;
-	}
-	
-	if ( m_should_save ) {
-		m_should_save = false;
-		settings.save ( g.m_cfg_name );
-	}
-	
-	if ( !this->m_visible ) {
-		return;
+void menu_t::draw ( ) {
+	draw_list::frametime = interfaces::m_globals->m_frametime;
+	sesui::begin_frame ( _ ( L"Counter-Strike: Global Offensive" ) );
+
+	if ( sesui::input::key_pressed ( VK_INSERT ) )
+		m_opened = !m_opened;
+
+	if ( sesui::begin_window ( _ ( L"hypnotic" ), sesui::rect ( ( render.m_width - 639 ) / 2, ( render.m_height - 488 ) / 2, 639, 488 ), m_opened, sesui::window_flags::no_closebutton ) ) {
+		if ( sesui::begin_tabs ( 6 ) ) {
+			sesui::tab ( _ ( L"rage" ), main_window_tab_idx );
+			sesui::tab ( _ ( L"visuals" ), main_window_tab_idx );
+			sesui::tab ( _ ( L"misc" ), main_window_tab_idx );
+			sesui::tab ( _ ( L"players" ), main_window_tab_idx );
+			sesui::tab ( _ ( L"skins" ), main_window_tab_idx );
+			sesui::tab ( _ ( L"cheat" ), main_window_tab_idx );
+			sesui::end_tabs ( );
+		}
+
+		switch ( main_window_tab_idx ) {
+		case 0: {
+			if ( sesui::begin_group ( _ ( L"weapon selection" ), sesui::rect ( 0.0f, 0.0f, 0.5f, 0.27f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::end_group ( );
+			}
+
+			if ( sesui::begin_group ( _ ( L"configuration" ), sesui::rect ( 0.0f, 0.30f, 0.5f, 0.70f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::end_group ( );
+			}
+
+			if ( sesui::begin_group ( L"anti-aim", sesui::rect ( 0.5f, 0.0f, 0.5f, 1.0f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::end_group ( );
+			}
+		} break;
+		case 1: {
+
+		} break;
+		case 2: {
+
+		} break;
+		}
+
+		sesui::end_window ( );
 	}
 
-	for ( auto &window : this->m_windows ) {
-		window->think ( );
-		window->paint ( );
-	}
+	sesui::render ( );
+	sesui::end_frame ( );
 }
 
 IDirect3DStateBlock9 *pixel_state = NULL; IDirect3DVertexDeclaration9 *vertDec; IDirect3DVertexShader9 *vertShader;
 DWORD dwOld_D3DRS_COLORWRITEENABLE;
 DWORD srgbwrite;
 
-void gui_t::apply_render_states ( IDirect3DDevice9 *device ) {
+void menu_t::apply_render_states ( IDirect3DDevice9 *device ) {
 	D3DVIEWPORT9 d3d_viewport;
 
 	device->GetViewport ( &d3d_viewport );
@@ -139,7 +106,7 @@ void gui_t::apply_render_states ( IDirect3DDevice9 *device ) {
 	device->SetRenderState ( D3DRS_COLORWRITEENABLE, D3DCOLORWRITEENABLE_RED | D3DCOLORWRITEENABLE_GREEN | D3DCOLORWRITEENABLE_BLUE | D3DCOLORWRITEENABLE_ALPHA );
 }
 
-void gui_t::restore_render_states ( IDirect3DDevice9 *device ) {
+void menu_t::restore_render_states ( IDirect3DDevice9 *device ) {
 	pixel_state->Apply ( );
 	pixel_state->Release ( );
 
@@ -147,7 +114,7 @@ void gui_t::restore_render_states ( IDirect3DDevice9 *device ) {
 	device->SetRenderState ( D3DRS_SRGBWRITEENABLE, srgbwrite );
 }
 
-void gui_t::begin ( IDirect3DDevice9 *device, const std::function< void ( ) > &fn ) {
+void menu_t::begin ( IDirect3DDevice9 *device, const std::function< void ( ) > &fn ) {
 	apply_render_states ( device );
 	fn ( );
 	restore_render_states ( device );

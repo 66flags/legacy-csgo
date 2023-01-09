@@ -27,7 +27,6 @@ void set_cvar_values ( ) {
 }
 
 bool hooks_t::init ( ) {
-	menu.init ( );
 	set_cvar_values ( );
 
 	m_hwnd = LI_FN ( FindWindowA )( _ ( "Valve001" ), nullptr );
@@ -35,6 +34,9 @@ bool hooks_t::init ( ) {
 
 	if ( MH_Initialize ( ) != MH_OK )
 		throw std::runtime_error ( _ ( "Failed to initialize minhook." ) );
+
+	menu.init ( );
+	settings.refresh ( );
 
 	const auto _create_move = util::get_method < void * > ( interfaces::m_client_mode, 24 );
 	const auto _frame_stage_notify = util::get_method < void * > ( interfaces::m_client, 36 );

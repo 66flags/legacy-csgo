@@ -91,7 +91,7 @@ void settings_t::save ( const std::string &name ) {
         }
     }
 
-    std::ofstream file { name };
+    std::ofstream file { name + _ ( ".json" ) };
 
     file << std::setw ( 4 ) << parsed_data << std::endl;
 
@@ -101,7 +101,7 @@ void settings_t::save ( const std::string &name ) {
 bool settings_t::load ( const std::string &name ) {
     using namespace nlohmann;
 
-    std::ifstream file { name };
+    std::ifstream file { name + _ ( ".json" ) };
 
     if ( !file.is_open ( ) ) {
         return false;
@@ -135,4 +135,20 @@ bool settings_t::load ( const std::string &name ) {
     }
 
     return true;
+}
+
+void settings_t::refresh ( ) {
+    auto sanitize_str = [ ] ( const std::wstring &text ) -> std::wstring {
+		std::string str = std::string ( text.begin ( ), text.end ( ) );
+
+        size_t last_index = str.find_last_of ( "." );
+        std::string raw = str.substr ( 0, last_index );
+
+		return std::wstring ( raw.begin ( ), raw.end ( ) );
+    };
+
+    for ( const auto &p : std::filesystem::directory_iterator ( std::filesystem::current_path ( ) ) ) {
+		if ( p.is_regular_file ( ) && p.exists ( ) && p.path ( ).extension ( ) == _ ( ".json" ) )
+            config_list.push_back ( sanitize_str ( p.path ( ).filename ( ).wstring ( ) ) );
+    }
 }

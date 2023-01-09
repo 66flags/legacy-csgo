@@ -31,6 +31,9 @@ struct settings_t {
 	void init ( );
 	void save ( const std::string &name );
 	bool load ( const std::string &name );
+	void refresh ( );
+	
+	std::deque < std::wstring > config_list;
 public:
 	template < typename t >
 	inline t &get_item ( const std::string &name ) {

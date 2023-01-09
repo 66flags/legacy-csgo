@@ -2,6 +2,9 @@
 
 menu_t menu { };
 
+std::wstring config_name = L"default";
+std::mutex ui_mutex;
+
 void menu_t::init ( ) {
 	draw_list::device = interfaces::m_device;
 
@@ -19,6 +22,28 @@ void menu_t::init ( ) {
 }
 
 int main_window_tab_idx = 0;
+int main_dpi_scale = 0;
+
+void unlock_hidden_convars ( ) {
+	if ( !interfaces::m_cvar )
+		return;
+
+	cvar_t *list;
+
+	list = interfaces::m_cvar->get_commands ( );
+
+	if ( !list )
+		return;
+
+	int i = 0;
+
+	for ( auto it = list; it != nullptr; it = it->m_next ) {
+		it->m_flags &= ~( ( 1 << 4 ) | ( 1 << 1 ) ); /* FVAR_HIDDEN | FVAR_DEVELOPMENTONLY */
+		i++;
+	}
+
+	notify.print ( tfm::format ( _ ( "Unlocked %d convars.\n" ), i ).c_str ( ) );
+}
 
 void menu_t::draw ( ) {
 	draw_list::frametime = interfaces::m_globals->m_frametime;
@@ -28,11 +53,10 @@ void menu_t::draw ( ) {
 		m_opened = !m_opened;
 
 	if ( sesui::begin_window ( _ ( L"hypnotic" ), sesui::rect ( ( render.m_width - 639 ) / 2, ( render.m_height - 488 ) / 2, 639, 488 ), m_opened, sesui::window_flags::no_closebutton ) ) {
-		if ( sesui::begin_tabs ( 6 ) ) {
+		if ( sesui::begin_tabs ( 5 ) ) {
 			sesui::tab ( _ ( L"rage" ), main_window_tab_idx );
 			sesui::tab ( _ ( L"visuals" ), main_window_tab_idx );
 			sesui::tab ( _ ( L"misc" ), main_window_tab_idx );
-			sesui::tab ( _ ( L"players" ), main_window_tab_idx );
 			sesui::tab ( _ ( L"skins" ), main_window_tab_idx );
 			sesui::tab ( _ ( L"cheat" ), main_window_tab_idx );
 			sesui::end_tabs ( );
@@ -44,19 +68,117 @@ void menu_t::draw ( ) {
 				sesui::end_group ( );
 			}
 
-			if ( sesui::begin_group ( _ ( L"configuration" ), sesui::rect ( 0.0f, 0.30f, 0.5f, 0.70f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+			if ( sesui::begin_group ( _ ( L"config" ), sesui::rect ( 0.0f, 0.30f, 0.5f, 0.70f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
 				sesui::end_group ( );
 			}
 
-			if ( sesui::begin_group ( L"anti-aim", sesui::rect ( 0.5f, 0.0f, 0.5f, 1.0f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+			if ( sesui::begin_group ( _ ( L"anti aim" ), sesui::rect ( 0.5f, 0.0f, 0.5f, 1.0f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
 				sesui::end_group ( );
 			}
 		} break;
 		case 1: {
+			if ( sesui::begin_group ( _ ( L"player esp" ), sesui::rect ( 0.0f, 0.0f, 0.5f, 1.0f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::end_group ( );
+			}
 
+			if ( sesui::begin_group ( _ ( L"other" ), sesui::rect ( 0.5f, 0.0f, 0.5f, 0.47f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::end_group ( );
+			}
+
+			if ( sesui::begin_group ( _ ( L"models" ), sesui::rect ( 0.5f, 0.50f, 0.5f, 0.50f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::end_group ( );
+			}
 		} break;
 		case 2: {
+			if ( sesui::begin_group ( _ ( L"main" ), sesui::rect ( 0.0f, 0.0f, 0.5f, 1.0f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::checkbox ( _ ( L"Auto bhop" ), settings.get_item < bool > ( _ ( "misc.bunny_hop" ) ) );
+				sesui::checkbox ( _ ( L"Auto strafe" ), settings.get_item < bool > ( _ ( "misc.auto_strafe" ) ) );
 
+				if ( settings.get_item < bool > ( _ ( "misc.auto_strafe" ) ) )
+					sesui::combobox ( _ ( L"Strafe type" ), settings.get_item < int > ( _ ( "misc.auto_strafe_type" ) ), { _ ( L"View angles" ), _ ( L"Movement keys" ) } );
+				
+				sesui::checkbox ( _ ( L"No crouch cooldown" ), settings.get_item < bool > ( _ ( "misc.unlimited_duck" ) ) );
+				
+				sesui::end_group ( );
+			}
+
+			if ( sesui::begin_group ( _ ( L"hack" ), sesui::rect ( 0.5f, 0.0f, 0.5f, 1.0f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::combobox ( _ ( L"DPI scale" ), main_dpi_scale, { _ ( L"100%" ), _ ( L"125%" ), _ ( L"150%" ), _ ( L"175%" ), _ ( L"200%" ) } ); {
+					switch ( main_dpi_scale ) {
+					case 0: sesui::globals::dpi = 1.0f; break;
+					case 1: sesui::globals::dpi = 1.25f; break;
+					case 2: sesui::globals::dpi = 1.5f; break;
+					case 3: sesui::globals::dpi = 1.75f; break;
+					case 4: sesui::globals::dpi = 2.0f; break;
+					}
+				}
+
+				if ( sesui::button ( _ ( L"Unlock hidden convars" ) ) ) {
+					unlock_hidden_convars ( );
+					interfaces::m_engine->execute_client_cmd ( _ ( "play ui\\buttonclick" ) );
+				}
+
+				sesui::end_group ( );
+			}
+		} break;
+		case 3: {
+			/* EMPTY. */
+		} break;
+		case 4: {
+			if ( sesui::begin_group ( _ ( L"configs" ), sesui::rect ( 0.0f, 0.0f, 0.5f, 1.0f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				for ( auto &item : settings.config_list ) {
+					if ( sesui::button ( item.data ( ) ) )
+						config_name = item;
+				}
+
+				sesui::end_group ( );
+			}
+
+			if ( sesui::begin_group ( _ ( L"options" ), sesui::rect ( 0.5f, 0.0f, 0.5f, 1.0f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::textbox ( _ ( L"Config name" ), config_name );
+
+				if ( sesui::button ( _ ( L"Save" ) ) ) {
+					ui_mutex.lock ( );
+					settings.config_list.clear ( );
+					settings.save ( std::wstring_convert < std::codecvt_utf8 < wchar_t > > ( ).to_bytes ( config_name ) );
+					settings.refresh ( );
+					ui_mutex.unlock ( );
+
+					interfaces::m_engine->execute_client_cmd ( _ ( "play ui\\buttonclick" ) );
+				};
+
+				if ( sesui::button ( _ ( L"Load" ) ) ) {
+					ui_mutex.lock ( );
+					settings.load ( std::wstring_convert < std::codecvt_utf8 < wchar_t > > ( ).to_bytes ( config_name ) );
+					ui_mutex.unlock ( );
+
+					interfaces::m_engine->execute_client_cmd ( _ ( "play ui\\buttonclick" ) );
+				};
+
+				if ( sesui::button ( _ ( L"Delete" ) ) ) {
+					ui_mutex.lock ( );
+
+					std::remove ( std::string ( std::wstring_convert < std::codecvt_utf8 < wchar_t > > ( ).to_bytes ( config_name + _ ( L".json" ) ) ).data ( ) );
+					settings.config_list.clear ( );
+					settings.refresh ( );
+
+					ui_mutex.unlock ( );
+
+					interfaces::m_engine->execute_client_cmd ( _ ( "play ui\\buttonclick" ) );
+				};
+
+				if ( sesui::button ( _ ( L"Refresh" ) ) ) {
+					ui_mutex.lock ( );
+
+					settings.config_list.clear ( );
+					settings.refresh ( );
+
+					ui_mutex.unlock ( );
+
+					interfaces::m_engine->execute_client_cmd ( _ ( "play ui\\buttonclick" ) );
+				};
+				sesui::end_group ( );
+			}
 		} break;
 		}
 

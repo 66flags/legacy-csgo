@@ -17,6 +17,7 @@
 #include <cmath>
 #include <algorithm>
 #include <shared_mutex>
+#include <codecvt>
 
 #include "include/nlohmann/json.hpp"
 #include "include/nlohmann/json_fwd.hpp"
@@ -48,7 +49,6 @@
 #include "prediction_error_handler.h"
 #include "penetration.h"
 #include "movement.h"
-#include "visitor.h"
 #include "visitor.h"
 #include "render.h"
 #include "config.h"

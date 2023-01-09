@@ -3,7 +3,7 @@
 notify_t notify { };
 
 void notify_t::print ( const std::string &msg ) {
-	interfaces::m_cvar->console_color_printf ( m_accent, _ ( "[hack] " ) );
+	interfaces::m_cvar->console_color_printf ( m_accent, _ ( "[hypnotic] " ) );
 	interfaces::m_cvar->console_color_printf ( m_accent, msg.data ( ) );
 }
 

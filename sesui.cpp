@@ -12888,9 +12888,9 @@ bool sesui::begin_group ( const ses_string &name, const rect &fraction, const re
 	bounds.x += scale_dpi ( window->second.main_area.w * fraction.x );
 	bounds.y += scale_dpi ( window->second.main_area.h * fraction.y );
 
-	auto titlebar_rect = rect ( bounds.x, bounds.y, bounds.w, 30.f );
+	auto titlebar_rect = rect ( bounds.x, bounds.y, bounds.w, 25.f );
 
-	titlebar_rect = rect ( bounds.x, bounds.y, bounds.w, 30.f );
+	titlebar_rect = rect ( bounds.x, bounds.y, bounds.w, 25.f );
 
 	const auto window_rect = rect ( bounds.x, bounds.y + scale_dpi ( titlebar_rect.h - 6.0f ), bounds.w, bounds.h - titlebar_rect.h + 6.0f );
 	const auto remove_rounding_rect = rect ( titlebar_rect.x, titlebar_rect.y + scale_dpi ( titlebar_rect.h - 6.0f ), titlebar_rect.w, 6.0f * 2.0f );

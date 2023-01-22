@@ -3,39 +3,19 @@
 settings_t settings { };
 
 void settings_t::init ( ) {
-	option_t::add_bool ( _ ( "misc.bunny_hop" ), false );
-	option_t::add_bool ( _ ( "misc.auto_strafe" ), false );
-	option_t::add_int ( _ ( "misc.auto_strafe_type" ), 1 );
 	option_t::add_bool ( _ ( "misc.unlimited_duck" ), false );
-	option_t::add_bool ( _ ( "visuals.grenade_visualization" ), false );
-	option_t::add_color ( _ ( "visuals.grenade_line_color" ), { 255, 166, 166 } );
-	option_t::add_color ( _ ( "visuals.grenade_circle_color" ), { 166, 215, 255 } );
-	option_t::add_bool ( _ ( "visuals.prop_transparency" ), false );
-    option_t::add_float ( _ ( "visuals.prop_transparency_amt" ), 100.0f );
-	option_t::add_float ( _ ( "visuals.thirdperson_dist" ), 120.0f );
-    option_t::add_bool ( _ ( "events.hurt" ), true );
-	option_t::add_bool ( _ ( "events.buy" ), false );
-	option_t::add_bool ( _ ( "events.bomb" ), true );
-	option_t::add_bool ( _ ( "events.round" ), false );
+	option_t::add_bool ( _ ( "visuals.transparent_props" ), false );
+    option_t::add_int ( _ ( "transparent_props_amount" ), 0 );
+    option_t::add_bool ( _ ( "misc.bunny_hop" ), false );
+    option_t::add_bool ( _ ( "misc.auto_strafe" ), false );
+    option_t::add_int ( _ ( "misc.auto_strafe_type" ), 1 );
+	option_t::add_bool ( _ ( "visuals.modulate_world" ), false );
     option_t::add_bool ( _ ( "visuals.thirdperson" ), false );
-    option_t::add_int ( _ ( "visuals.thirdperson_key" ), 0 );
-    option_t::add_int ( _ ( "visuals.thirdperson_toggle" ), 0 );
-	option_t::add_bool ( _ ( "visuals.thirdperson_spectator" ), false );
-
-	option_t::add_int ( _ ( "visuals.visual_toggle_key" ), 0 );
-	option_t::add_int ( _ ( "visuals.visual_toggle_key_toggle" ), 1 );
-	option_t::add_bool ( _ ( "visuals.players_enable" ), false );
-	option_t::add_bool ( _ ( "visuals.dormant" ), false );
-	option_t::add_float ( _ ( "visuals.dormancy_time" ), 0.0f );
-	option_t::add_color ( _ ( "visuals.health_color1" ), { 0, 255, 0 } );
-	option_t::add_color ( _ ( "visuals.health_color2" ), { 255, 0, 0 } );
-	option_t::add_bool ( _ ( "visuals.health" ), false );
-	option_t::add_color ( _ ( "visuals.name_color" ), { 255, 255, 255 } );
-	option_t::add_bool ( _ ( "visuals.name" ), false );
-	option_t::add_color ( _ ( "visuals.weapon_color" ), { 255, 255, 255 } );
-	option_t::add_bool ( _ ( "visuals.weapon" ), false );
-	option_t::add_color ( _ ( "visuals.box_color" ), { 255, 255, 255 } );
-	option_t::add_bool ( _ ( "visuals.box" ), false );
+	option_t::add_int ( _ ( "visuals.thirdperson_key" ), 0 );
+	option_t::add_int ( _ ( "visuals.thirdperson_distance" ), 160 );
+    option_t::add_bool ( _ ( "visuals.thirdperson_key" ), 0 );
+	option_t::add_bool ( _ ( "visuals.thirdperson_key_toggle" ), 0 );
+	option_t::add_color ( _ ( "visuals.modulate_world_color" ), sesui::color ( 1.0f, 1.0f, 1.0f, 1.0f ) );
 }
 
 void option_t::add_int ( const std::string &name, int value ) {
@@ -58,7 +38,7 @@ void option_t::add_string ( const std::string &name, const std::string &value ) 
     options [ name ].s = value;
 }
 
-void option_t::add_color ( const std::string &name, const color_t &value ) {
+void option_t::add_color ( const std::string &name, const sesui::color &value ) {
     options [ name ].type = option_type_t::option_color;
     options [ name ].c = value;
 }

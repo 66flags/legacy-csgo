@@ -32,10 +32,14 @@ struct hooks_t {
 	static bool __fastcall post_network_data_received ( void *ecx, void *edx, int commands_acknowledged );
 	static void __fastcall paint_traverse ( void *ecx, void *edx, unsigned int panel, bool force_repaint, bool allow_force );
 	static void __fastcall run_command ( void *ecx, void *edx, player_t *player, ucmd_t *ucmd, c_move_helper *move_helper );;
+	static float __fastcall get_alpha_modulation ( void *ecx, void *edx );
+	static void __fastcall get_color_modulation ( void *ecx, void *edx, int* r, int* g, int* b );
 
 	// detours.
 	detour_t m_create_move;
 	detour_t m_frame_stage_notify;
+	detour_t m_get_alpha_modulation;
+	detour_t m_get_color_modulation;
 	detour_t m_paint;
 	detour_t m_paint_traverse;
 	detour_t m_run_command;

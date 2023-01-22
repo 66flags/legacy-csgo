@@ -372,7 +372,7 @@ namespace sesui {
 		float spacing = 8.5f;
 		float padding = 6.0f;
 		float resize_grab_radius = 6.0f;
-		float same_line_offset = 140.0f;
+		float same_line_offset = 165.0f;
 		float scroll_arrow_height = 18.0f;
 
 		vec2 inline_button_size = vec2 ( 15.0f, 15.0f );

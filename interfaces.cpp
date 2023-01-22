@@ -29,6 +29,7 @@ bool interfaces::init ( ) {
 	m_device = pattern::find ( _ ( "shaderapidx9.dll" ), _ ( "A1 ? ? ? ? 50 8B 08 FF 51 ? 8B F8" ) ).add ( 1 ).deref ( ).deref ( ).as < IDirect3DDevice9 * > ( );
 	m_client_state = pattern::find ( _ ( "engine.dll" ), _ ( "A1 ? ? ? ? 8B 88 ? ? ? ? 85 C9 75 07" ) ).add ( 1 ).deref ( ).deref ( ).as < c_client_state * > ( );
 	m_client_mode = pattern::find ( _ ( "client.dll" ), _ ( "8B 0D ? ? ? ? 8B 01 FF 50 1C 85 F6 75 0D A1" ) ).add ( 2 ).deref ( ).deref ( ).as < c_client_mode * > ( );
-
+	m_material_sys = create_interface < c_material_system * > ( _ ( "materialsystem.dll" ), _ ( "VMaterialSystem080" ) );
+	
 	return true;
 }

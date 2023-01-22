@@ -24,6 +24,7 @@ namespace interfaces {
 	inline c_client_state *m_client_state = nullptr;
 	inline IDirect3DDevice9 *m_device = nullptr;
 	inline c_client_mode *m_client_mode = nullptr;
+	inline c_material_system *m_material_sys = nullptr;
 
 	bool init ( );
 }

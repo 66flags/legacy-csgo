@@ -408,7 +408,7 @@ float penetration_t::scale_dmg ( player_t *player, float damage, float armor_rat
 		/* NOTE: we don't need to scale based on armor / helmet since zeus will always target generic hitgroup. */
 		switch ( hitgroup ) {
 		case hitgroup_t::hitgroup_head:
-			damage *= weapon->data ( ) ? ( weapon->data ( )->m_headshot_multiplier * head_damage_scale ) : ( 4.0f * head_damage_scale );
+			damage *= 4.0f * head_damage_scale;
 			break;
 		case hitgroup_t::hitgroup_chest:
 			damage *= 1.0f * scale_body_damage;

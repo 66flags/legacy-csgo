@@ -167,6 +167,7 @@
     <ClInclude Include="include\nlohmann\ordered_map.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+    <ClInclude Include="material.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="movement.h" />
     <ClInclude Include="penetration.h" />
@@ -224,6 +225,8 @@
     <ClCompile Include="draw_list.cpp" />
     <ClCompile Include="end_scene.cpp" />
     <ClCompile Include="frame_stage_notify.cpp" />
+    <ClCompile Include="get_alpha_modulation.cpp" />
+    <ClCompile Include="get_color_modulation.cpp" />
     <ClCompile Include="lock_cursor.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="movement.cpp" />

@@ -16,13 +16,13 @@ struct option_t {
 	float f;
 	bool b;
 	std::string s;
-	color_t c = { 255, 255, 255, 255 };
+	sesui::color c = sesui::color ( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	static void add_int ( const std::string &name, int value );
 	static void add_float ( const std::string &name, float value );
 	static void add_bool ( const std::string &name, bool value );
 	static void add_string ( const std::string &name, const std::string &value );
-	static void add_color ( const std::string &name, const color_t &value );
+	static void add_color ( const std::string &name, const sesui::color &value );
 };
 
 inline std::unordered_map < std::string, option_t > options { };

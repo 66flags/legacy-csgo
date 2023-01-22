@@ -14,7 +14,7 @@ void visuals_t::paint ( ) {
 		if ( !get_box_bounds ( ent, box ) )
 			continue;
 
-		render.outlined_rect ( box.x, box.y, box.w, box.h, { 255, 255, 255 } );
+		//render.outlined_rect ( box.x, box.y, box.w, box.h, { 255, 255, 255 } );
 	}
 }
 

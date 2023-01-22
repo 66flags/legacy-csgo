@@ -13435,7 +13435,6 @@ void sesui::slider_ex ( const ses_string &name, float &option, float min, float 
 
 		/* label */
 		draw_list.add_text ( window->second.cursor_stack.back ( ), style.control_font, title, false, style.control_text.lerp ( style.control_text_hovered, window->second.anim_time [ window->second.cur_index ] ) );
-
 	}
 
 	/* value with formatting */
@@ -13443,7 +13442,12 @@ void sesui::slider_ex ( const ses_string &name, float &option, float min, float 
 	draw_list.get_text_size ( style.control_font, value_str, value_size );
 
 	if ( should_draw ) {
-		draw_list.add_text ( vec2 ( window->second.cursor_stack.back ( ).x + scale_dpi ( slider_rect.w ) - value_size.x, window->second.cursor_stack.back ( ).y ), style.control_font, value_str, false, style.control_text.lerp ( style.control_text_hovered, window->second.anim_time [ window->second.cur_index ] ) );
+		if ( parts.first.empty ( ) ) {
+			draw_list.add_text ( vec2 ( window->second.cursor_stack.back ( ).x + 1.f + scale_dpi ( slider_rect.w ) / 2 - scale_dpi ( value_size.x ) / 2, window->second.cursor_stack.back ( ).y + 7.f + scale_dpi ( slider_rect.h ) / 2 - scale_dpi ( value_size.y ) / 2 ), style.control_font, value_str, false, sesui::color ( 0.0f, 0.0f, 0.0f, 1.0f ) );
+			draw_list.add_text ( vec2 ( window->second.cursor_stack.back ( ).x + scale_dpi ( slider_rect.w ) / 2 - scale_dpi ( value_size.x ) / 2, window->second.cursor_stack.back ( ).y + 6.f + scale_dpi ( slider_rect.h ) / 2 - scale_dpi ( value_size.y ) / 2 ), style.control_font, value_str, false, style.control_text.lerp ( style.control_text_hovered, window->second.anim_time [ window->second.cur_index ] ) );
+		}
+		else
+			draw_list.add_text ( vec2 ( window->second.cursor_stack.back ( ).x + scale_dpi ( slider_rect.w ) - value_size.x, window->second.cursor_stack.back ( ).y ), style.control_font, value_str, false, style.control_text.lerp ( style.control_text_hovered, window->second.anim_time [ window->second.cur_index ] ) );
 	}
 
 	window->second.last_cursor_offset = scale_dpi ( style.slider_size.y + style.spacing + style.padding ) + text_size.y;

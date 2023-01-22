@@ -78,10 +78,44 @@ void menu_t::draw ( ) {
 		} break;
 		case 1: {
 			if ( sesui::begin_group ( _ ( L"player esp" ), sesui::rect ( 0.0f, 0.0f, 0.5f, 1.0f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+
 				sesui::end_group ( );
 			}
 
 			if ( sesui::begin_group ( _ ( L"other" ), sesui::rect ( 0.5f, 0.0f, 0.5f, 0.47f ), sesui::rect ( sesui::style.spacing * 0.5f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::checkbox ( _ ( L"Transparent props" ), settings.get_item < bool > ( _ ( "visuals.transparent_props" ) ) );
+
+				if ( settings.get_item < bool > ( _ ( "visuals.transparent_props" ) ) )
+					sesui::slider ( _ ( L"Amount##transparent_props" ), settings.get_item < int > ( _ ( "visuals.transparent_props_amount" ) ), 0, 100, _ ( L"%d" ) );
+
+				sesui::checkbox ( _ ( L"Modulate world" ), settings.get_item < bool > ( _ ( "visuals.modulate_world" ) ) );
+				sesui::same_line ( );
+				sesui::colorpicker ( _ ( L"Color##modulate world" ), settings.get_item < sesui::color > ( _ ( "visuals.modulate_world_color" ) ) );
+				sesui::combobox ( _ ( L"Skybox" ), settings.get_item < int > ( _ ( "visuals.skybox" ) ), 
+					{ 
+						_ ( L"cs_baggage_skybox_" ) ,
+						_ ( L"cs_tibet" ) ,
+						_ ( L"vietnam" ) ,
+						_ ( L"sky_lunacy" ) ,
+						_ ( L"embassy" ) ,
+						_ ( L"italy" ) ,
+						_ ( L"jungle" ) ,
+						_ ( L"office" ) ,
+						_ ( L"sky_cs15_daylight01_hdr" ) ,
+						_ ( L"sky_cs15_daylight02_hdr" ) ,
+						_ ( L"sky_day02_05" ) ,
+						_ ( L"sky_csgo_cloudy01" ) ,
+						_ ( L"sky_csgo_night02" ) ,
+						_ ( L"sky_csgo_night02b" ) ,
+					} );
+
+				sesui::checkbox ( _ ( L"Thirdperson" ), settings.get_item < bool > ( _ ( "visuals.thirdperson" ) ) );
+
+				if ( settings.get_item < bool > ( _ ( "visuals.thirdperson" ) ) ) {
+					sesui::keybind ( _ ( L"Thirdperson key##thirdperson" ), settings.get_item < int > ( _ ( "visuals.thirdperson_key" ) ), settings.get_item < int > ( _ ( "visuals.thirdperson_key_toggle" ) ) );
+					sesui::slider ( _ ( L"Thirdperson distance##thirdpersondist" ), settings.get_item < int > ( _ ( "visuals.thirdperson_distance" ) ), 0, 160, _ ( L"%d" ) );
+				}
+
 				sesui::end_group ( );
 			}
 

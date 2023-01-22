@@ -10,7 +10,7 @@ void set_cvar_values ( ) {
 	cl_extrapolate->remove_callbacks ( );
 	cl_extrapolate->set_int ( 0 );
 
-	static cvar_t *cl_csm_shadows = interfaces::m_cvar->find_var ( HASH ( "cl_extrapolate" ) );
+	static cvar_t *cl_csm_shadows = interfaces::m_cvar->find_var ( HASH ( "cl_csm_shadows" ) );
 
 	cl_csm_shadows->remove_callbacks ( );
 	cl_csm_shadows->set_int ( 0 );
@@ -22,6 +22,9 @@ void set_cvar_values ( ) {
 
 	static cvar_t *name = interfaces::m_cvar->find_var ( HASH ( "name" ) );
 	name->remove_callbacks ( );
+
+	static cvar_t *r_DrawSpecificStaticProp = interfaces::m_cvar->find_var ( HASH ( "r_DrawSpecificStaticProp" ) );
+	r_DrawSpecificStaticProp->remove_callbacks ( );
 
 	interfaces::m_engine->client_cmd_unrestricted ( _ ( "rate 786432" ) );
 }
@@ -41,6 +44,7 @@ bool hooks_t::init ( ) {
 	const auto _create_move = util::get_method < void * > ( interfaces::m_client_mode, 24 );
 	const auto _frame_stage_notify = util::get_method < void * > ( interfaces::m_client, 36 );
 	const auto _paint = pattern::find ( _ ( "engine.dll" ), _ ( "55 8B EC 83 EC 40 53 8B D9 8B 0D ? ? ? ? 89" ) ).as< void * > ( );
+	const auto _get_alpha_modulation = pattern::find ( _ ( "materialsystem.dll" ), _ ( "55 8B EC 83 EC 0C 56 8B F1 8A 46 20 C0 E8 02 A8" ) ).sub ( 48 ).as < void * > ( );
 	const auto _paint_traverse = util::get_method < void * > ( interfaces::m_panel, 41 );
 	const auto _run_command = util::get_method < void * > ( interfaces::m_prediction, 19 );
 	const auto _end_scene = util::get_method < void * > ( interfaces::m_device, 42 );
@@ -57,6 +61,8 @@ bool hooks_t::init ( ) {
 	m_reset.create ( _reset, reset );
 	m_lock_cursor.create ( _lock_cursor, lock_cursor );
 	m_post_network_data_received.create ( _post_network_data_received, post_network_data_received );
+	m_get_alpha_modulation.create ( _get_alpha_modulation, get_alpha_modulation );
+	//m_get_color_modulation.create ( _get_color_modulation, get_color_modulation );
 
 	/* init event handler. */
 	event_handler = std::make_unique < c_event_handler > ( );

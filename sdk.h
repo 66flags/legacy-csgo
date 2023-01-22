@@ -9,6 +9,7 @@
 #include "surfacedata.h"
 #include "game_type.h"
 #include "debug_overlay.h"
+#include "material.h"
 #include "global_vars_base.h"
 #include "client_mode.h"
 #include "color.h"

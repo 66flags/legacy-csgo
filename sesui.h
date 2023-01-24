@@ -249,7 +249,6 @@ namespace sesui {
 		}
 
 		font ( ) {
-
 		}
 	};
 

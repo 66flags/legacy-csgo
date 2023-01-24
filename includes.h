@@ -56,4 +56,5 @@
 #include "draw_list.h"
 #include "menu.h"
 #include "visuals.h"
+#include "inputsystem.h"
 #include "hooks.h"

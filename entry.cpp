@@ -9,6 +9,7 @@ void __stdcall cheat_thread ( ) {
 
 	/* init others. */
 	netvars.init ( );
+	settings.init ( );
 	render.init ( );
 	hooks.init ( );
 

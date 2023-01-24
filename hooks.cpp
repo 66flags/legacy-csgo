@@ -43,6 +43,7 @@ bool hooks_t::init ( ) {
 
 	const auto _create_move = util::get_method < void * > ( interfaces::m_client_mode, 24 );
 	const auto _frame_stage_notify = util::get_method < void * > ( interfaces::m_client, 36 );
+	const auto _override_view = util::get_method < void * > ( interfaces::m_client_mode, 18 );
 	const auto _paint = pattern::find ( _ ( "engine.dll" ), _ ( "55 8B EC 83 EC 40 53 8B D9 8B 0D ? ? ? ? 89" ) ).as< void * > ( );
 	const auto _get_alpha_modulation = pattern::find ( _ ( "materialsystem.dll" ), _ ( "55 8B EC 83 EC 0C 56 8B F1 8A 46 20 C0 E8 02 A8" ) ).sub ( 48 ).as < void * > ( );
 	const auto _paint_traverse = util::get_method < void * > ( interfaces::m_panel, 41 );
@@ -51,6 +52,8 @@ bool hooks_t::init ( ) {
 	const auto _reset = util::get_method < void * > ( interfaces::m_device, 16 );
 	const auto _post_network_data_received = pattern::find ( _ ( "client.dll" ), _ ( "55 8B EC 83 E4 ? 83 EC ? 53 56 57 6A ? 6A" ) ).as < void * > ( );
 	const auto _lock_cursor = util::get_method < void * > ( interfaces::m_surface, 67 );
+	const auto _sv_cheats = interfaces::m_cvar->find_var ( HASH ( "sv_cheats" ) );
+	const auto _sv_cheats_get_bool = util::get_method < void * > ( _sv_cheats, 13 );
 
 	m_create_move.create ( _create_move, create_move );
 	m_frame_stage_notify.create ( _frame_stage_notify, frame_stage_notify );
@@ -63,6 +66,8 @@ bool hooks_t::init ( ) {
 	m_post_network_data_received.create ( _post_network_data_received, post_network_data_received );
 	m_get_alpha_modulation.create ( _get_alpha_modulation, get_alpha_modulation );
 	//m_get_color_modulation.create ( _get_color_modulation, get_color_modulation );
+	m_override_view.create ( _override_view, override_view );
+	m_sv_cheats_get_bool.create ( _sv_cheats_get_bool, sv_cheats_get_bool );
 
 	/* init event handler. */
 	event_handler = std::make_unique < c_event_handler > ( );

@@ -34,6 +34,8 @@ struct hooks_t {
 	static void __fastcall run_command ( void *ecx, void *edx, player_t *player, ucmd_t *ucmd, c_move_helper *move_helper );;
 	static float __fastcall get_alpha_modulation ( void *ecx, void *edx );
 	static void __fastcall get_color_modulation ( void *ecx, void *edx, int* r, int* g, int* b );
+	static void __fastcall override_view ( void *ecx, void *edx, view_setup_t *setup );
+	static bool __fastcall sv_cheats_get_bool ( void *ecx, void *edx );
 
 	// detours.
 	detour_t m_create_move;
@@ -47,6 +49,8 @@ struct hooks_t {
 	detour_t m_end_scene;
 	detour_t m_reset;
 	detour_t m_lock_cursor;
+	detour_t m_override_view;
+	detour_t m_sv_cheats_get_bool;
 
 	// util stuff.
 	HWND m_hwnd;

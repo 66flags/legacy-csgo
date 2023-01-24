@@ -68,12 +68,12 @@ public:
 	}
 
 	__forceinline void remove_callbacks ( ) {
-		*reinterpret_cast< int * >( reinterpret_cast< uintptr_t >( &m_callbacks ) + 0xC ) = 0;
+		*reinterpret_cast< int * > ( reinterpret_cast< uintptr_t > ( &m_callbacks ) + 0xC ) = 0;
 	}
 
 	__forceinline const char *get_name ( ) {
-		using get_name_fn = const char *( __thiscall * )( void * );
-		return util::get_method< get_name_fn > ( this, indices_t::_get_name )( this );
+		using get_name_fn = const char * ( __thiscall * ) ( void * );
+		return util::get_method < get_name_fn > ( this, indices_t::_get_name )( this );
 	}
 
 	__forceinline const char *get_string ( ) {

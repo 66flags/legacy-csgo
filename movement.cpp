@@ -30,7 +30,7 @@ void movement_t::run ( ucmd_t *ucmd, const vec_t &old_angs ) {
 	if ( settings.get_item < bool > ( _ ( "misc.unlimited_duck" ) ) )
 		ucmd->m_buttons |= buttons_t::bullrush;
 
-	if ( settings.get_item < bool > ( _ ( "misc.auto_strafe" ) ) && g.m_local->vel ( ).length_2d ( ) >= 30.0f ) {
+	if ( settings.get_item < bool > ( _ ( "misc.auto_strafe" ) ) && prediction.m_vel.length_2d ( ) >= 30.0f ) {
 		if ( settings.get_item < int > ( _ ( "misc.auto_strafe_type" ) ) == 1 ) {
 			directional_strafe ( ucmd, old_angs );
 		}

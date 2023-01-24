@@ -167,6 +167,7 @@
     <ClInclude Include="include\nlohmann\ordered_map.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley.hpp" />
     <ClInclude Include="include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
+    <ClInclude Include="inputsystem.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="movement.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="lock_cursor.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="movement.cpp" />
+    <ClCompile Include="override_view.cpp" />
     <ClCompile Include="paint.cpp" />
     <ClCompile Include="paint_traverse.cpp" />
     <ClCompile Include="penetration.cpp" />
@@ -252,6 +254,7 @@
     <ClCompile Include="reset.cpp" />
     <ClCompile Include="run_command.cpp" />
     <ClCompile Include="sesui.cpp" />
+    <ClCompile Include="sv_cheats_get_bool.cpp" />
     <ClCompile Include="trampoline.c" />
     <ClCompile Include="visuals.cpp" />
     <ClCompile Include="weapon.cpp" />

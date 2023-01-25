@@ -12,8 +12,8 @@ void settings_t::init ( ) {
 	option_t::add_bool ( _ ( "visuals.modulate_world" ), false );
     option_t::add_bool ( _ ( "visuals.thirdperson" ), false );
 	option_t::add_int ( _ ( "visuals.thirdperson_distance" ), 160 );
-    option_t::add_bool ( _ ( "visuals.thirdperson_key" ), 0 );
-	option_t::add_bool ( _ ( "visuals.thirdperson_key_toggle" ), 2 );
+    option_t::add_int ( _ ( "visuals.thirdperson_key" ), 0 );
+	option_t::add_int ( _ ( "visuals.thirdperson_key_toggle" ), 2 );
 	option_t::add_color ( _ ( "visuals.modulate_world_color" ), sesui::color ( 1.0f, 1.0f, 1.0f, 1.0f ) );
 }
 

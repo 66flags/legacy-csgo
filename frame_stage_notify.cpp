@@ -15,34 +15,33 @@ const char *sky_names [ ] = {
 	_ ( "sky_csgo_cloudy01" ) ,
 	_ ( "sky_csgo_night02" ) ,
 	_ ( "sky_csgo_night02b" ) ,
-};
+}; /* Skybox names! */
 
 void __fastcall hooks_t::frame_stage_notify ( void *ecx, void *edx, frame_stage_t stage ) {
 	if ( stage != frame_stage_t::start )
 		g.m_stage = stage;
 
 	g.m_local = ( interfaces::m_engine->is_connected ( ) || interfaces::m_engine->is_in_game ( ) ) ? interfaces::m_entlist->get< player_t * > ( interfaces::m_engine->get_local_player ( ) ) : nullptr;
-	
+
 	static cvar_t *r_DrawSpecificStaticProp = interfaces::m_cvar->find_var ( HASH ( "r_DrawSpecificStaticProp" ) );
 
-	if ( stage == frame_stage_t::render_start ) {	
-		static int last_skybox = settings.get_item < int > ( _ ( "visuals.skybox" ) );
-		static sesui::color last_world_color = settings.get_item < sesui::color > ( _ ( "visuals.modulate_world_color" ) );
-
-		if ( last_skybox != settings.get_item < int > ( _ ( "visuals.skybox" ) ) ) {
-			static auto r_loadnamedsky = pattern::find ( _ ( "engine.dll" ), _ ( "55 8B EC 81 ? ? ? ? ? 56 57 8B F9 C7" ) ).as < bool ( __thiscall * ) ( const char * ) > ( );
-
-			r_loadnamedsky ( sky_names [ settings.get_item < int > ( _ ( "visuals.skybox" ) ) ] );
-			last_skybox = settings.get_item < int > ( _ ( "visuals.skybox" ) );
-		}
-
+	if ( stage == frame_stage_t::render_start ) {
 		static auto &modulate_world_color = settings.get_item < sesui::color > ( _ ( "visuals.modulate_world_color" ) );
+		static auto &skybox = settings.get_item < int > ( _ ( "visuals.skybox" ) );
 
-		if ( settings.get_item < bool > ( _ ( "visuals.modulate_world" ) ) ) {
-			if ( r_DrawSpecificStaticProp->get_int ( ) != 0 )
-				r_DrawSpecificStaticProp->set_int ( 0 );
+		static sesui::color last_world_color = settings.get_item < sesui::color > ( _ ( "visuals.modulate_world_color" ) );
+		static bool last_alive = false;
+		static int last_skybox = settings.get_item < int > ( _ ( "visuals.skybox" ) );
 
-			if ( last_world_color.r != modulate_world_color.r || last_world_color.g != modulate_world_color.g || last_world_color.b != modulate_world_color.b ) {
+		if ( last_alive != g.m_local->alive ( ) || last_world_color.r != modulate_world_color.r || last_world_color.g != modulate_world_color.g || last_world_color.b != modulate_world_color.b || last_skybox != settings.get_item < int > ( _ ( "visuals.skybox" ) ) ) {
+			static auto load_named_sky = pattern::find ( _ ( "engine.dll" ), _ ( "55 8B EC 81 ? ? ? ? ? 56 57 8B F9 C7" ) ).as < bool ( __thiscall * ) ( const char * ) > ( );
+			load_named_sky ( sky_names [ settings.get_item < int > ( _ ( "visuals.skybox" ) ) ] );
+			last_skybox = settings.get_item < int > ( _ ( "visuals.skybox" ) );
+
+			if ( settings.get_item < bool > ( _ ( "visuals.modulate_world" ) ) ) {
+				if ( r_DrawSpecificStaticProp->get_int ( ) != 0 )
+					r_DrawSpecificStaticProp->set_int ( 0 );
+
 				for ( uint16_t h { interfaces::m_material_sys->first_material ( ) }; h != interfaces::m_material_sys->invalid_material ( ); h = interfaces::m_material_sys->next_material ( h ) ) {
 					auto mat = interfaces::m_material_sys->get_material ( h );
 
@@ -53,9 +52,11 @@ void __fastcall hooks_t::frame_stage_notify ( void *ecx, void *edx, frame_stage_
 						mat->color_modulate ( modulate_world_color.r * 255.f, modulate_world_color.g * 255.f, modulate_world_color.b * 255.f );
 					}
 				}
-
-				last_world_color = modulate_world_color;
 			}
+
+			last_world_color = modulate_world_color;
+			last_skybox = skybox;
+			last_alive = g.m_local->alive ( );
 		}
 		else {
 			if ( r_DrawSpecificStaticProp->get_int ( ) != -1 )
@@ -63,10 +64,12 @@ void __fastcall hooks_t::frame_stage_notify ( void *ecx, void *edx, frame_stage_
 		}
 
 		if ( settings.get_item < bool > ( _ ( "visuals.transparent_props" ) ) ) {
+			/* Fix this shit w/ static props. */
 			if ( r_DrawSpecificStaticProp->get_int ( ) != 0 )
 				r_DrawSpecificStaticProp->set_int ( 0 );
 		}
 		else {
+			/* Restore. */
 			if ( r_DrawSpecificStaticProp->get_int ( ) != -1 )
 				r_DrawSpecificStaticProp->set_int ( -1 );
 		}

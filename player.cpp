@@ -107,11 +107,6 @@ void player_t::pre_think ( ) {
 	util::get_method < pre_think_fn > ( this, 307 )( this );
 }
 
-bool player_t::is_player ( ) {
-	using is_player_fn = bool ( __thiscall * )( void * );
-	return util::get_method < is_player_fn > ( this, 158 )( this );
-}
-
 vec_t player_t::shoot_pos ( ) {
 	vec_t pos;
 	util::get_method < void ( __thiscall * )( void *, const vec_t & ) > ( this, 163 )( this, pos );

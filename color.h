@@ -3,24 +3,21 @@
 struct color_t {
 	color_t ( ) = default;
 
-	template < typename t >
-	__forceinline color_t ( t r, t g, t b ) {
+	__forceinline color_t ( int r, int g, int b ) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
 		this->a = 255;
 	}
 
-	template < typename t >
-	__forceinline color_t ( t r, t g, t b, t a ) {
+	__forceinline color_t ( int r, int g, int b, int a ) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
 		this->a = a;
 	}
 
-	template < typename t >
-	__forceinline color_t ( color_t col, t a ) {
+	__forceinline color_t ( color_t col, int a ) {
 		this->r = col.r;
 		this->g = col.g;
 		this->b = col.b;

@@ -164,6 +164,8 @@ public:
 	OFFSET ( int, button_disabled, 0x3340 );
 	OFFSET ( int, sequence, 0xA30 );
 	NETVAR ( int, survival_team, "DT_CSPlayer", "m_nSurvivalTeam" );
+	NETVAR ( int, account, "DT_CSPlayer", "m_iAccount" );
+	NETVAR ( bool, scoped, "DT_CSPlayer", "m_bIsScoped" );
 	OFFSET ( animstate_t *, animstate, 0x3874 );
 	NETVAR ( int, health, "DT_BasePlayer", "m_iHealth" );
 	NETVAR ( life_states_t, life_state, "DT_BasePlayer", "m_lifeState" );
@@ -202,7 +204,6 @@ public:
 	vec_t shoot_pos ( );
 	datamap_t *get_pred_desc_map ( );
 	void pre_think ( );
-	bool is_player ( );
 	void think ( );
 	void set_sequence ( int sequence );
 	std::uint8_t *get_original_network_data_object ( ) const;

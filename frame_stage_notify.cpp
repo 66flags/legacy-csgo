@@ -15,7 +15,7 @@ const char *sky_names [ ] = {
 	_ ( "sky_csgo_cloudy01" ) ,
 	_ ( "sky_csgo_night02" ) ,
 	_ ( "sky_csgo_night02b" ) ,
-}; /* Skybox names! */
+};
 
 void __fastcall hooks_t::frame_stage_notify ( void *ecx, void *edx, frame_stage_t stage ) {
 	if ( stage != frame_stage_t::start )
@@ -51,15 +51,14 @@ void __fastcall hooks_t::frame_stage_notify ( void *ecx, void *edx, frame_stage_
 				if ( r_DrawSpecificStaticProp->get_int ( ) != 0 )
 					r_DrawSpecificStaticProp->set_int ( 0 );
 
-				for ( uint16_t h { interfaces::m_material_sys->first_material ( ) }; h != interfaces::m_material_sys->invalid_material ( ); h = interfaces::m_material_sys->next_material ( h ) ) {
+				for ( uint16_t h = interfaces::m_material_sys->first_material ( ); h != interfaces::m_material_sys->invalid_material ( ); h = interfaces::m_material_sys->next_material ( h ) ) {
 					auto mat = interfaces::m_material_sys->get_material ( h );
 
 					if ( !mat )
 						continue;
 
-					if ( strstr ( mat->get_texture_group_name ( ), _ ( "World textures" ) ) ) {
+					if ( strstr ( mat->get_texture_group_name ( ), _ ( "World textures" ) ) )
 						mat->color_modulate ( modulate_world_color.r * 255.f, modulate_world_color.g * 255.f, modulate_world_color.b * 255.f );
-					}
 				}
 			}
 			else {

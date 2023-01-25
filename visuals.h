@@ -6,7 +6,9 @@ struct box_t {
 
 struct visuals_t {
 	void paint ( );
-	bool get_box_bounds ( player_t *ent, box_t &box );
+	void player ( player_t *pl );
+	void draw ( entity_t *ent );
+	bool get_player_box ( player_t *ent, box_t &box );
 };
 
 extern visuals_t visuals;

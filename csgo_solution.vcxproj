@@ -31,6 +31,7 @@
     <ClInclude Include="engine.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game_type.h" />
+    <ClInclude Include="hooge.h" />
     <ClInclude Include="include\freetype\config\ftconfig.h" />
     <ClInclude Include="include\freetype\config\ftheader.h" />
     <ClInclude Include="include\freetype\config\ftmodule.h" />

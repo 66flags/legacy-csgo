@@ -1,4 +1,8 @@
 #pragma once
+
+#undef min
+#undef max
+
 #include <Windows.h>
 #include <chrono>
 #include <thread>
@@ -30,6 +34,7 @@
 #include "pattern.h"
 #include "pad.h"
 #include "vector.h"
+#include "hooge.h"
 #include "matrix.h"
 #include "math.h"
 #include "crc32.h"

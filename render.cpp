@@ -3,12 +3,17 @@
 render_t render { };
 
 void render_t::init ( ) {
+	unsigned long font_count = 0;
+	LI_FN ( AddFontMemResourceEx ) ( hooge_ttf, sizeof ( hooge_ttf ), nullptr, &font_count );
+
+	/* update screen size. */
 	interfaces::m_engine->get_screen_size ( m_width, m_height );
 
-	fonts [ fonts_t::default_font ] = font_data_t ( _ ( "Verdana" ), 12, 400, 0, font_flags_t::font_flag_anti_aliasing | font_flags_t::font_flag_drop_shadow );
-	fonts [ fonts_t::log_font ] = font_data_t ( _ ( "Calibri" ), 14, 400, 0, font_flags_t::font_flag_anti_aliasing | font_flags_t::font_flag_drop_shadow );
-	fonts [ fonts_t::debug_font ] = font_data_t ( _ ( "Courier New" ), 15, 400, 0, font_flags_t::font_flag_outline );
+	/* create font data. */
+	fonts [ fonts_t::font_esp_name ] = font_data_t ( _ ( "Verdana" ), 12, FW_BOLD, 0, font_flags_t::font_flag_drop_shadow );
+	fonts [ fonts_t::font_esp_small ] = font_data_t ( _ ( "hooge 05_55 Cyr2" ), 9, 400, 0, font_flags_t::font_flag_outline );
 
+	/* iterate and create fonts. */
 	for ( auto &font : fonts ) {
 		auto &font_data = font.second;
 

@@ -598,6 +598,9 @@
     <ClInclude Include="inputsystem.h">
       <Filter>csgo</Filter>
     </ClInclude>
+    <ClInclude Include="hooge.h">
+      <Filter>csgo\resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry.cpp">

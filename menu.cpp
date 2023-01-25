@@ -78,6 +78,32 @@ void menu_t::draw ( ) {
 		} break;
 		case 1: {
 			if ( sesui::begin_group ( _ ( L"player esp" ), sesui::rect ( 0.0f, 0.0f, 0.5f, 1.0f ), sesui::rect ( 0.0f, 0.0f, -sesui::style.spacing * 0.5f, 0.0f ) ) ) {
+				sesui::checkbox ( _ ( L"Enable" ), settings.get_item < bool > ( _ ( "visuals.player_enable" ) ) );
+				sesui::checkbox ( _ ( L"Dormant" ), settings.get_item < bool > ( _ ( "visuals.player_dormant" ) ) );
+				sesui::checkbox ( _ ( L"Bounding box" ), settings.get_item < bool > ( _ ( "visuals.player_box" ) ) );
+				sesui::same_line ( );
+				sesui::colorpicker ( _ ( L"Color##box color" ), settings.get_item < sesui::color > ( _ ( "visuals.player_box_color" ) ) );
+
+				sesui::multiselect ( _ ( L"Flags" ), { 
+					{ _ ( L"Armor" ), settings.get_item < bool > ( _ ( "visuals.flags_armor" ) ) },
+					{ _ ( L"Money" ), settings.get_item < bool > ( _ ( "visuals.flags_money" ) ) }, 
+					{ _ ( L"Bomb" ), settings.get_item < bool > ( _ ( "visuals.flags_bomb" ) ) },
+					{ _ ( L"Defuser" ), settings.get_item < bool > ( _ ( "visuals.flags_defuser" ) ) }, 
+					{ _ ( L"Scoped" ), settings.get_item < bool > ( _ ( "visuals.flags_scoped" ) ) },
+					{ _ ( L"Distance" ), settings.get_item < bool > ( _ ( "visuals.flags_distance" ) ) }
+				} );
+
+				sesui::checkbox ( _ ( L"Name" ), settings.get_item < bool > ( _ ( "visuals.player_name" ) ) );
+				sesui::same_line ( );
+				sesui::colorpicker ( _ ( L"Color##name color" ), settings.get_item < sesui::color > ( _ ( "visuals.player_name_color" ) ) );
+				sesui::checkbox ( _ ( L"Health" ), settings.get_item < bool > ( _ ( "visuals.player_health" ) ) );
+				sesui::multiselect ( _ ( L"Weapon" ), { { _ ( L"Name" ), settings.get_item < bool > ( _ ( "visuals.player_weapon_name" ) ) }, { _ ( L"Icon" ), settings.get_item < bool > ( _ ( "visuals.player_weapon_icon" ) ) } } );
+				sesui::checkbox ( _ ( L"Ammo" ), settings.get_item < bool > ( _ ( "visuals.player_ammo" ) ) );
+				sesui::same_line ( );
+				sesui::colorpicker ( _ ( L"Color##ammo color" ), settings.get_item < sesui::color > ( _ ( "visuals.player_ammo_color" ) ) );
+				sesui::checkbox ( _ ( L"LBY indication" ), settings.get_item < bool > ( _ ( "visuals.player_lby_indicator" ) ) );
+				sesui::same_line ( );
+				sesui::colorpicker ( _ ( L"Color##lby indication" ), settings.get_item < sesui::color > ( _ ( "visuals.player_lby_indicator_color" ) ) );
 
 				sesui::end_group ( );
 			}
@@ -110,11 +136,9 @@ void menu_t::draw ( ) {
 					} );
 
 				sesui::checkbox ( _ ( L"Thirdperson" ), settings.get_item < bool > ( _ ( "visuals.thirdperson" ) ) );
-
-				if ( settings.get_item < bool > ( _ ( "visuals.thirdperson" ) ) ) {
-					sesui::keybind ( _ ( L"Thirdperson key##thirdperson" ), settings.get_item < int > ( _ ( "visuals.thirdperson_key" ) ), settings.get_item < int > ( _ ( "visuals.thirdperson_key_toggle" ) ) );
-					sesui::slider ( _ ( L"Thirdperson distance##thirdpersondist" ), settings.get_item < int > ( _ ( "visuals.thirdperson_distance" ) ), 0, 160, _ ( L"%d" ) );
-				}
+				sesui::keybind ( _ ( L"Thirdperson key##thirdperson" ), settings.get_item < int > ( _ ( "visuals.thirdperson_key" ) ), settings.get_item < int > ( _ ( "visuals.thirdperson_key_toggle" ) ) );
+				sesui::slider ( _ ( L"Thirdperson distance##thirdpersondist" ), settings.get_item < int > ( _ ( "visuals.thirdperson_distance" ) ), 0, 160, _ ( L"%d" ) );
+				
 
 				sesui::end_group ( );
 			}

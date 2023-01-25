@@ -1,9 +1,8 @@
 #pragma once
 
 enum class fonts_t {
-	default_font,
-	log_font,
-	debug_font
+	font_esp_name,
+	font_esp_small
 };
 
 struct font_data_t {

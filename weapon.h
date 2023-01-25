@@ -54,4 +54,7 @@ public:
 	NETVAR ( float, accuracy_penalty, "DT_WeaponCSBase", "m_fAccuracyPenalty" );
 	
 	weapon_info_t *data ( );
+	c_econ_item_definition *econ_item_view ( weapon_t *weapon );
+	c_econ_item_definition *static_data ( c_econ_item_definition *item );
+	const wchar_t *name ( );
 };

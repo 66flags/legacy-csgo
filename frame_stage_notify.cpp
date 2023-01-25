@@ -29,6 +29,15 @@ void __fastcall hooks_t::frame_stage_notify ( void *ecx, void *edx, frame_stage_
 		static auto &modulate_world_color = settings.get_item < sesui::color > ( _ ( "visuals.modulate_world_color" ) );
 		static auto &skybox = settings.get_item < int > ( _ ( "visuals.skybox" ) );
 
+		if ( settings.get_item < bool > ( _ ( "visuals.transparent_props" ) ) ) {
+			if ( r_DrawSpecificStaticProp->get_int ( ) != 0 )
+				r_DrawSpecificStaticProp->set_int ( 0 );
+		}
+		else {
+			if ( r_DrawSpecificStaticProp->get_int ( ) != -1 )
+				r_DrawSpecificStaticProp->set_int ( -1 );
+		}
+
 		static sesui::color last_world_color = settings.get_item < sesui::color > ( _ ( "visuals.modulate_world_color" ) );
 		static bool last_alive = false;
 		static int last_skybox = settings.get_item < int > ( _ ( "visuals.skybox" ) );
@@ -53,25 +62,14 @@ void __fastcall hooks_t::frame_stage_notify ( void *ecx, void *edx, frame_stage_
 					}
 				}
 			}
+			else {
+				if ( r_DrawSpecificStaticProp->get_int ( ) != -1 )
+					r_DrawSpecificStaticProp->set_int ( -1 );
+			}
 
 			last_world_color = modulate_world_color;
 			last_skybox = skybox;
 			last_alive = g.m_local->alive ( );
-		}
-		else {
-			if ( r_DrawSpecificStaticProp->get_int ( ) != -1 )
-				r_DrawSpecificStaticProp->set_int ( -1 );
-		}
-
-		if ( settings.get_item < bool > ( _ ( "visuals.transparent_props" ) ) ) {
-			/* Fix this shit w/ static props. */
-			if ( r_DrawSpecificStaticProp->get_int ( ) != 0 )
-				r_DrawSpecificStaticProp->set_int ( 0 );
-		}
-		else {
-			/* Restore. */
-			if ( r_DrawSpecificStaticProp->get_int ( ) != -1 )
-				r_DrawSpecificStaticProp->set_int ( -1 );
 		}
 	}
 
